@@ -28,6 +28,7 @@ To decompress the file, the command "LWFQZip2 -d" should be called.
 More parameters can be specified for the mapping and compressiong parts as follows: 
 
 COMMANDS AND OPTIONS
+
 LWFQZip2 	<mode>...[options]
   	
     Mode:
