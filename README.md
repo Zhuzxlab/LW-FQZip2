@@ -6,7 +6,7 @@ LW-FQZip 2 is a lossless reference-based compression method targeting FASTQ file
 
 LW-FQZip 2 is developed in C/C++ and runs on 32/64 bit Linux or Mac OS. A minimum memory of 1GB is suggested for good user experience. To install the program, please download and decompress the source code and then compile it in a GNU environment equipped with GCC compiler using the following commands:
 
-	git clone https://github.com/DengQingJin/LW-FQZip2.git
+	git clone https://github.com/Zhuzxlab/LW-FQZip2.git
 	cd LW-FQZip2
 	make clean
 	make
