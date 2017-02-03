@@ -26,6 +26,7 @@ To decompress the file, the command "LWFQZip2 -d" should be called.
 	LWFQZip2 -d -i SRR1063349.fastq.lz -r NC_017634.1.fasta
 
 More parameters can be specified for the mapping and compressiong parts as follows: 
+
 COMMANDS AND OPTIONS
 LWFQZip2 	<mode>...[options]
   	
