@@ -62,4 +62,4 @@ LWFQZip2 	<mode>...[options]
     -e 	the tolerance rate of mismatches.(Default: '-e 0.05').
 
 
-More discussions are available in our paper and our page(http://csse.szu.edu.cn/staff/zhuzx/lwfqzip2/index.html). The details of implementation, data sets, and experimental studies are provided in the supplementary file(). 
+More discussions are available in our paper and our page(http://csse.szu.edu.cn/staff/zhuzx/lwfqzip2/index.html). The details of implementation, data sets, and experimental studies are provided in the supplementary file(http://csse.szu.edu.cn/staff/zhuzx/LWFQZip2/SupplementaryFile.pdf). 
