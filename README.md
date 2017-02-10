@@ -11,7 +11,7 @@ LW-FQZip 2 is developed in C/C++ and runs on 32/64 bit Linux or Mac OS. A minimu
 	make clean
 	make
 
-The executable files ‘LWFQZip2’, ‘LWMapping’ and 'FQZip' will be generated in the same directory of the source code. The light-weight mapping model can be used independently with LW-FQZip 2. Make sure the archiving tool tar(http://www.gnu.org/software/tar/tar.html) have been installed and configured correctly before running LW-FQZip 2. High compression mode depends on compression algorithms: zpaq702(http://mattmahoney.net/dc/zpaq702.zip). To ensure that executable file zpaq has permission to perform.
+The executable files ‘LWFQZip2’, ‘LWMapping’ and 'FQZip' will be generated in the same directory of the source code. The light-weight mapping model can be used independently with LW-FQZip 2. Make sure the archiving tool tar(http://www.gnu.org/software/tar/tar.html) have been installed and configured correctly before running LW-FQZip 2. LW-FQZip 2 depends on compression algorithms: lpaq9m(http://mattmahoney.net/dc/text.html#1440). High compression mode depends on compression algorithms: zpaq702(http://mattmahoney.net/dc/zpaq702.zip). To ensure that executable file zpaq has permission to perform.
 
 ### Commands
 
@@ -62,4 +62,4 @@ LWFQZip2 	<mode>...[options]
     -e 	the tolerance rate of mismatches.(Default: '-e 0.05').
 
 
-More discussions are available in our paper and our page(http://csse.szu.edu.cn/staff/zhuzx/lwfqzip2/index.html). The details of implementation, data sets, and experimental studies are provided in the supplementary file. 
+More discussions are available in our paper and our page(http://csse.szu.edu.cn/staff/zhuzx/lwfqzip2/index.html). The details of implementation, data sets, and experimental studies are provided in the supplementary file(). 
