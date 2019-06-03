@@ -61,7 +61,7 @@ pthread_t thread[MaxNum];
 //  options:
 int command     = 0;   // 'c' or 'd'
 int memoryLimit = 128; // memory limit in MiB
-int orderLimit  = 4;   //  order limit in bytes
+int orderLimit  = 20;   //  order limit in bytes
 long totalread_threshold=20000000;
 //PPM+arithmetic coding
 class ReciprocalTable
@@ -94,8 +94,8 @@ struct F
 
 struct G
 {
-	char intput[50];
-	char output[50];
+	char intput[500];
+	char output[500];
 }G1,G3,G4,G6,F5={{'\0'},{'\0'}};
 
 
@@ -915,7 +915,7 @@ void*   Decompress3_encode_imp_thread(void * args)
 char *get_fastq_name(char *fastqname, char *str)
 {
 	int i = 0, j = 0;
-	for (i = 0; i<60; i++)
+	for (i = 0; i<600; i++)
 	{
 		if (str[i] == '.'&&str[i + 1] == 'f' && str[i + 2] == 'a' )
 			break;
@@ -931,7 +931,6 @@ int main(int argc, char ** argv)
 
 	bool help = false;
 	bool version = false;
-
 	int c;
 	while ((c = getopt(argc, argv, "hVvqm:O:")) != -1)
 	{
@@ -989,7 +988,7 @@ int main(int argc, char ** argv)
 	FILE * output3 = fopen(argv[optind+9], "wb");
 	FILE * output4 = fopen(argv[optind+10], "wb");
 	FILE * output6 = fopen(argv[optind+12], "wb");
-	char fasta_intput[50]="\0", fasta_output[50]="\0";
+	char fasta_intput[500]="\0", fasta_output[500]="\0";
 	int file_number;
 
 	F1.intput=input1;
@@ -1027,44 +1026,44 @@ int main(int argc, char ** argv)
 		totalread=atol(argv[optind+13]);//obtain total read count
 		if(totalread<=totalread_threshold||highestCom_flag==1)//20 milllion=~5GB all file size,<20 million don't cread multithread for qs compression
 		{
-		if(highestCom_flag==0)// normal model
-		{
-		F6.progressBar = 1;
-		pthread_create(&thread1, 0, &Compress_encode_imp_thread, &F1);
-		pthread_create(&thread2, 0, &Compress_encode_imp_thread, &F2);
-		pthread_create(&thread3, 0, &Compress_encode_imp_thread, &F3);
-		pthread_create(&thread4, 0, &Compress_encode_imp_thread, &F4);
-		pthread_create(&thread5, 0, &Compress1_encode_imp_thread, &F5);
-		pthread_create(&thread6, 0, &Compress_encode_imp_thread, &F6);
-		}
-		else	//highest compression model
-		{
-		pthread_create(&thread1, 0, &Compress3_encode_imp_thread, &G1);
-		pthread_create(&thread2, 0, &Compress_encode_imp_thread, &F2);
-		pthread_create(&thread3, 0, &Compress3_encode_imp_thread, &G3);
-		pthread_create(&thread4, 0, &Compress3_encode_imp_thread, &G4);
-		pthread_create(&thread5, 0, &Compress2_encode_imp_thread, &F5);
-		pthread_create(&thread6, 0, &Compress2_encode_imp_thread, &G6);
-		}
-		if(argc==18)//assemble-based model
-		{
-			strcpy(fasta_intput,argv[optind+15]);
-			strcpy(fasta_output,argv[optind+15]);
-			strcat(fasta_output,".lz");
-			FILE * input7=fopen(fasta_intput, "rb");
-			FILE * output7=fopen(fasta_output, "wb");
-			F7.intput=input7;
-			F7.output=output7;
-			pthread_create(&thread7, 0, &Compress_encode_imp_thread, &F7);
-		}
-		pthread_join(thread1, 0);
-		pthread_join(thread2, 0);
-		pthread_join(thread3, 0);
-		pthread_join(thread4, 0);
-		pthread_join(thread5, 0);
-		pthread_join(thread6, 0);
-		if(argc==18)
-		pthread_join(thread7, 0);
+			if(highestCom_flag==0)// normal model
+			{
+			F6.progressBar = 1;
+			pthread_create(&thread1, 0, &Compress_encode_imp_thread, &F1);
+			pthread_create(&thread2, 0, &Compress_encode_imp_thread, &F2);
+			pthread_create(&thread3, 0, &Compress_encode_imp_thread, &F3);
+			pthread_create(&thread4, 0, &Compress_encode_imp_thread, &F4);
+			pthread_create(&thread5, 0, &Compress1_encode_imp_thread, &F5);
+			pthread_create(&thread6, 0, &Compress_encode_imp_thread, &F6);
+			}
+			else	//highest compression model
+			{
+			pthread_create(&thread1, 0, &Compress3_encode_imp_thread, &G1);
+			pthread_create(&thread2, 0, &Compress_encode_imp_thread, &F2);
+			pthread_create(&thread3, 0, &Compress3_encode_imp_thread, &G3);
+			pthread_create(&thread4, 0, &Compress3_encode_imp_thread, &G4);
+			pthread_create(&thread5, 0, &Compress2_encode_imp_thread, &F5);
+			pthread_create(&thread6, 0, &Compress2_encode_imp_thread, &G6);
+			}
+			if(argc==18)//assemble-based model
+			{
+				strcpy(fasta_intput,argv[optind+15]);
+				strcpy(fasta_output,argv[optind+15]);
+				strcat(fasta_output,".lz");
+				FILE * input7=fopen(fasta_intput, "rb");
+				FILE * output7=fopen(fasta_output, "wb");
+				F7.intput=input7;
+				F7.output=output7;
+				pthread_create(&thread7, 0, &Compress_encode_imp_thread, &F7);
+			}
+			pthread_join(thread1, 0);
+			pthread_join(thread2, 0);
+			pthread_join(thread3, 0);
+			pthread_join(thread4, 0);
+			pthread_join(thread5, 0);
+			pthread_join(thread6, 0);
+			if(argc==18)
+			pthread_join(thread7, 0);
 		}
 		else	//normal model
 		{
@@ -1171,44 +1170,44 @@ int main(int argc, char ** argv)
 			ismulti = true;
 		if(ismulti==false||highestCom_flag==1)
 		{
-		if(highestCom_flag==0)
-		{
-		F6.progressBar = 1;
-		pthread_create(&thread1, 0, &Decompress_encode_imp_thread, &F1);
-		pthread_create(&thread2, 0, &Decompress_encode_imp_thread, &F2);
-		pthread_create(&thread3, 0, &Decompress_encode_imp_thread, &F3);
-		pthread_create(&thread4, 0, &Decompress_encode_imp_thread, &F4);
-		pthread_create(&thread5, 0, &Decompress1_encode_imp_thread, &F5);
-		pthread_create(&thread6, 0, &Decompress_encode_imp_thread, &F6);
-		}
-		else
-		{
-		pthread_create(&thread1, 0, &Decompress3_encode_imp_thread, &G1);
-		pthread_create(&thread2, 0, &Decompress_encode_imp_thread, &F2);
-		pthread_create(&thread3, 0, &Decompress3_encode_imp_thread, &G3);
-		pthread_create(&thread4, 0, &Decompress3_encode_imp_thread, &G4);
-		pthread_create(&thread5, 0, &Decompress2_encode_imp_thread, &F5);
-		pthread_create(&thread6, 0, &Decompress2_encode_imp_thread, &G6);
-		}
-		if(argc==16)//assemble-based model
-		{
-			strcpy(fasta_intput,argv[optind+13]);
-			strcat(fasta_intput,".lz");
-			strcpy(fasta_output,argv[optind+13]);
-			FILE * input7=fopen(fasta_intput, "rb");
-			FILE * output7=fopen(fasta_output, "wb");
-			F7.intput=input7;
-			F7.output=output7;
-			pthread_create(&thread7, 0, &Decompress_encode_imp_thread, &F7);
-		}
-		pthread_join(thread1, 0);
-		pthread_join(thread2, 0);
-		pthread_join(thread3, 0);
-		pthread_join(thread4, 0);
-		pthread_join(thread5, 0);
-		pthread_join(thread6, 0);
-		if(argc==16)
-		pthread_join(thread7, 0);
+			if(highestCom_flag==0)
+			{
+			F6.progressBar = 1;
+			pthread_create(&thread1, 0, &Decompress_encode_imp_thread, &F1);
+			pthread_create(&thread2, 0, &Decompress_encode_imp_thread, &F2);
+			pthread_create(&thread3, 0, &Decompress_encode_imp_thread, &F3);
+			pthread_create(&thread4, 0, &Decompress_encode_imp_thread, &F4);
+			pthread_create(&thread5, 0, &Decompress1_encode_imp_thread, &F5);
+			pthread_create(&thread6, 0, &Decompress_encode_imp_thread, &F6);
+			}
+			else
+			{
+			pthread_create(&thread1, 0, &Decompress3_encode_imp_thread, &G1);
+			pthread_create(&thread2, 0, &Decompress_encode_imp_thread, &F2);
+			pthread_create(&thread3, 0, &Decompress3_encode_imp_thread, &G3);
+			pthread_create(&thread4, 0, &Decompress3_encode_imp_thread, &G4);
+			pthread_create(&thread5, 0, &Decompress2_encode_imp_thread, &F5);
+			pthread_create(&thread6, 0, &Decompress2_encode_imp_thread, &G6);
+			}
+			if(argc==16)//assemble-based model
+			{
+				strcpy(fasta_intput,argv[optind+13]);
+				strcat(fasta_intput,".lz");
+				strcpy(fasta_output,argv[optind+13]);
+				FILE * input7=fopen(fasta_intput, "rb");
+				FILE * output7=fopen(fasta_output, "wb");
+				F7.intput=input7;
+				F7.output=output7;
+				pthread_create(&thread7, 0, &Decompress_encode_imp_thread, &F7);
+			}
+			pthread_join(thread1, 0);
+			pthread_join(thread2, 0);
+			pthread_join(thread3, 0);
+			pthread_join(thread4, 0);
+			pthread_join(thread5, 0);
+			pthread_join(thread6, 0);
+			if(argc==16)
+			pthread_join(thread7, 0);
 		}
 		else
 		{	
@@ -1254,7 +1253,7 @@ int main(int argc, char ** argv)
 			fclose(FQS[i].intput);
 			fclose(FQS[i].output);
 			}
-			char order[500];
+			char order[5000];
 			stpcpy(order,"cat ");
 
 			for (int i = 1; i <= thread_num; i++)

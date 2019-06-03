@@ -7,24 +7,24 @@
 
 int BlockNum = 10; //Default file block && number of thread
 unsigned long long totleread=0,mappedread=0,exactmatch=0,doublemap=0,totalbase=0, mappedbase=0;
-char input_name[50]={'\0'},ref_name[50]={'\0'};
+char input_name[5000]={'\0'},ref_name[5000]={'\0'};
 
 struct M
 {
-	char Minput[50];
-	char MOutFile[MaxBlockNum][100];
+	char Minput[500];
+	char MOutFile[MaxBlockNum][10000];
 }M1;
 
 struct G
 {
-	char input[50];
-	char orders[100];
+	char input[500];
+	char orders[10000];
 }G1[MaxBlockNum];
 
 struct P
 {
-	char filename[50];
-	char file[50];
+	char filename[500];
+	char file[500];
 	long int readpos;
 	long int readle;
 	FILE *subfastq;
@@ -60,10 +60,10 @@ void *block_thread(void * args)
 
 void prekeycontent(char  *refname)
 {
-	char prekeyorder[100] = {0};
-	char prekeyorderAT[100] = {0},prekeyorderCG[100] = {0},prekeyorderGT[100] = {0},prekeyorderAC[100] = {0};
-	char prekeyorderTAG[100] = {0},prekeyorderGCA[100] = {0},prekeyorderTAT[100] = {0},prekeyorderACT[100] = {0};
-	char ref_name[50] = {'\0'};
+	char prekeyorder[10000] = {0};
+	char prekeyorderAT[10000] = {0},prekeyorderCG[10000] = {0},prekeyorderGT[10000] = {0},prekeyorderAC[10000] = {0};
+	char prekeyorderTAG[10000] = {0},prekeyorderGCA[10000] = {0},prekeyorderTAT[10000] = {0},prekeyorderACT[10000] = {0};
+	char ref_name[500] = {'\0'};
 
 	strcpy(ref_name, refname);
 
@@ -120,11 +120,11 @@ void Output_print(int block){
 	remove("Output.txt");
 }
 /*
-void Merge_file(char  *inputname,char  *refname,char outfile[][100]){
+void Merge_file(char  *inputname,char  *refname,char outfile[][10000]){
 	
 	int k;
-	char pos_name[50]={'\0'},cigar_name[50]={'\0'},cor_name[50]={'\0'},add_name[50]={'\0'},pos_order[500]={'\0'},cigar_order[500]={'\0'},cor_order[500]={'\0'},add_order[500]={'\0'};
-	char pos_outfile[MaxBlockNum][100] = {0},cigar_outfile[MaxBlockNum][100] = {0},cor_outfile[MaxBlockNum][100] = {0},add_outfile[MaxBlockNum][100] = {0};
+	char pos_name[500]={'\0'},cigar_name[500]={'\0'},cor_name[500]={'\0'},add_name[500]={'\0'},pos_order[5000]={'\0'},cigar_order[5000]={'\0'},cor_order[5000]={'\0'},add_order[5000]={'\0'};
+	char pos_outfile[MaxBlockNum][10000] = {0},cigar_outfile[MaxBlockNum][10000] = {0},cor_outfile[MaxBlockNum][10000] = {0},add_outfile[MaxBlockNum][10000] = {0};
 	FILE *pos_w=NULL,*cigar_w=NULL,*add_w=NULL,*cor_w=NULL;
 	
 	strcpy(pos_name,inputname); strcat(pos_name,".pos.txt");
@@ -142,7 +142,7 @@ void Merge_file(char  *inputname,char  *refname,char outfile[][100]){
 	add_w=fopen(add_name,"wb");
 
 	for (k = 0; k < BlockNum; k++) {
-		char s[10];
+		char s[100];
 		sprintf(s, "%d", k);
 		strcpy(pos_outfile[k], outfile[k]); strcat(pos_outfile[k],".pos.txt");
 		strcpy(cigar_outfile[k], outfile[k]); strcat(cigar_outfile[k], ".cigar.txt");
@@ -180,14 +180,14 @@ void *Merge_pos_file(void * args){
 	
 	struct M *Mp = args;
 	int k;
-	char pos_name[50]={'\0'},pos_order[500]={'\0'};
-	char pos_outfile[MaxBlockNum][100] = {0};
+	char pos_name[500]={'\0'},pos_order[5000]={'\0'};
+	char pos_outfile[MaxBlockNum][10000] = {0};
 	
 	strcpy(pos_name,Mp->Minput); strcat(pos_name,".pos.txt");
 	strcpy(pos_order, "cat");
 	
 	for (k = 0; k < BlockNum; k++) {
-		char s[10];
+		char s[100];
 		sprintf(s, "%d", k);
 		strcpy(pos_outfile[k], Mp->MOutFile[k]); strcat(pos_outfile[k],".pos.txt");
 		strcat(pos_order," "); strcat(pos_order,pos_outfile[k]);
@@ -204,14 +204,14 @@ void *Merge_cigar_file(void * args){
 	
 	struct M *Mc = args;
 	int k;
-	char cigar_name[50]={'\0'},cigar_order[500]={'\0'};
-	char cigar_outfile[MaxBlockNum][100] = {0};
+	char cigar_name[500]={'\0'},cigar_order[5000]={'\0'};
+	char cigar_outfile[MaxBlockNum][10000] = {0};
 	
 	strcpy(cigar_name,Mc->Minput); strcat(cigar_name,".cigar.txt");
 	strcpy(cigar_order, "cat");
 
 	for (k = 0; k < BlockNum; k++) {
-		char s[10];
+		char s[100];
 		sprintf(s, "%d", k);	
 		strcpy(cigar_outfile[k], Mc->MOutFile[k]); strcat(cigar_outfile[k], ".cigar.txt");		
 		strcat(cigar_order," "); strcat(cigar_order,cigar_outfile[k]);
@@ -228,14 +228,14 @@ void *Merge_cor_file(void * args){
 	
 	struct M *Mr = args;
 	int k;
-	char cor_name[50]={'\0'},cor_order[500]={'\0'};
-	char cor_outfile[MaxBlockNum][100] = {0};
+	char cor_name[500]={'\0'},cor_order[5000]={'\0'};
+	char cor_outfile[MaxBlockNum][10000] = {0};
 		
 	strcpy(cor_name,Mr->Minput); strcat(cor_name,".cor.txt");
 	strcpy(cor_order, "cat");
 	
 	for (k = 0; k < BlockNum; k++) {
-		char s[10];
+		char s[100];
 		sprintf(s, "%d", k);
 		strcpy(cor_outfile[k], Mr->MOutFile[k]); strcat(cor_outfile[k], ".cor.txt");		
 		strcat(cor_order," "); strcat(cor_order,cor_outfile[k]);
@@ -254,15 +254,15 @@ void *Merge_add_file(void * args){
 	
 	struct M *Ma = args;
 	int k;
-	char add_name[50]={'\0'},add_order[500]={'\0'};
-	char add_outfile[MaxBlockNum][100] = {0};
+	char add_name[500]={'\0'},add_order[5000]={'\0'};
+	char add_outfile[MaxBlockNum][10000] = {0};
 
 	strcpy(add_name,Ma->Minput); strcat(add_name,".add.txt");
 	strcpy(add_order, "cat");
 	
 
 	for (k = 0; k < BlockNum; k++) {
-		char s[10];
+		char s[100];
 		sprintf(s, "%d", k);
 		strcpy(add_outfile[k], Ma->MOutFile[k]); strcat(add_outfile[k], ".add.txt");
 		strcat(add_order," "); strcat(add_order,add_outfile[k]);
@@ -280,14 +280,14 @@ void *Merge_qs_file(void * args){
 	
 	struct M *Mq = args;
 	int k;
-	char qs_name[50]={'\0'},qs_order[500]={'\0'};
-	char qs_outfile[MaxBlockNum][100] = {0};
+	char qs_name[500]={'\0'},qs_order[5000]={'\0'};
+	char qs_outfile[MaxBlockNum][10000] = {0};
 		
 	strcpy(qs_name,Mq->Minput); strcat(qs_name,".qs.txt");
 	strcpy(qs_order, "cat");
 
 	for (k = 0; k < BlockNum; k++) {
-		char s[10];
+		char s[100];
 		sprintf(s, "%d", k);
 		strcpy(qs_outfile[k], Mq->MOutFile[k]); strcat(qs_outfile[k], ".qs.txt");		
 		strcat(qs_order," "); strcat(qs_order,qs_outfile[k]);
@@ -305,8 +305,8 @@ void *Merge_meta_file(void * args){
 	
 	struct M *Mm = args;
 	int k,i,l;
-	char meta_name[50]={'\0'},meta_order[500]={'\0'},meta_info[ReadLen]={'\0'};
-	char meta_outfile[MaxBlockNum][100] = {0};
+	char meta_name[500]={'\0'},meta_order[5000]={'\0'},meta_info[ReadLen]={'\0'};
+	char meta_outfile[MaxBlockNum][10000] = {0};
 	FILE *meta_w=NULL,*meta_r=NULL;
 	size_t buffer_sizes=get_file_size(Mm->Minput),buf_counts=0;
 	if(buffer_sizes<block_size)
@@ -339,7 +339,7 @@ void *Merge_meta_file(void * args){
 	fclose(meta_r);
 	
 	for (k = 0; k < BlockNum; k++) {
-		char s[10];
+		char s[100];
 		sprintf(s, "%d", k);
 		strcpy(meta_outfile[k], Mm->MOutFile[k]); strcat(meta_outfile[k], ".meta.txt");		
 		strcat(meta_order," "); strcat(meta_order,meta_outfile[k]);
@@ -368,7 +368,7 @@ long long ifnormal(char *inputname,long int pos){//修改....chx
 	FILE *fastqr = NULL;
 	//int countline =0;
 	//char a;
-	char tempStr[ReadLen] = { '\0' },readtmp[50] = { '\0' },readline[50] = { '\0' };
+	char tempStr[ReadLen] = { '\0' },readtmp[500] = { '\0' },readline[500] = { '\0' };
 	long long linecounts = 0;
 	if ((fastqr = fopen(inputname, "rb")) == NULL) {  printf("can not find this file:%s\n!", inputname); exit(0); }
 	while(fgets(tempStr,ReadLen,fastqr)!=NULL){
@@ -484,7 +484,7 @@ void multireadfile(long linecounts,int BlockNum,char *FASTQName,long int filesiz
 	//printf("multireadfile该函数结束!\n");
 }
 
-void readfile(long linecounts,int BlockNum,char *FASTQName,long int filesize,char outfile[][100]){
+void readfile(long linecounts,int BlockNum,char *FASTQName,long int filesize,char outfile[][10000]){
 	
 	pthread_t thread[BlockNum];
 	long readcounts, subreadcounts, lastblockcounts, subline;
@@ -530,7 +530,7 @@ void readfile(long linecounts,int BlockNum,char *FASTQName,long int filesize,cha
 void assemble_get_fasta(char *FASTQName,long int filesize,float FASTA_rate){
 	
 	FILE *OriFASTQ=NULL,*FASTA=NULL;
-	char OriFASTQName[500]={'\0'},tempStr[300000]={'\0'};
+	char OriFASTQName[5000]={'\0'},tempStr[300000]={'\0'};
 	float FASTA_Maxsize=filesize*FASTA_rate,FASTA_size=0;	
 	long countline=0;				
 	int i=0,flag_CG=0;		
@@ -584,7 +584,7 @@ int main(int argc, char *argv[])
 	int assemble_flag=0;
 	int highestCom_flag=0;
 	float FASTA_rate=0.003;//assemble-based
-	char order[MaxBlockNum][100] = {0};
+	char order[MaxBlockNum][10000] = {0};
 
 	opterr = 0;
 	int opt;
@@ -620,7 +620,7 @@ int main(int argc, char *argv[])
 			if(argv[optind]!=NULL&&atof(argv[optind])!=0)
 			{
 				FASTA_rate=atof(argv[optind]);
-				printf("FASTA extraction rate: %.2f%%\n",atof(argv[optind])*100);
+				printf("FASTA extraction rate: %.2f%%\n",atof(argv[optind])*10000);
 			}	
 			}
 				break;
@@ -638,7 +638,7 @@ int main(int argc, char *argv[])
 				break;
 			case 'M':
 			case 'm'://max_read_len
-				read_len = strtoul(optarg, NULL, 10);
+				read_len = strtoul(optarg, NULL, 100);
 				if (read_len>300000 || read_len<30000)
 				{
 					fprintf(stderr, "Please input the correct read length.\n");
@@ -680,13 +680,12 @@ int main(int argc, char *argv[])
 
 		int i,f;
 		//temporary row number
-		char tempStr[ReadLen] = { '\0' },OutFile[MaxBlockNum][100] = { 0 },FASTQName[50] = { '\0' },prekeyname[5] = { '\0' };
+		char tempStr[ReadLen] = { '\0' },OutFile[MaxBlockNum][10000] = { 0 },FASTQName[500] = { '\0' },prekeyname[5] = { '\0' };
 		long long linecounts = 0; //line counts of file
 		long readcounts, subreadcounts, lastblockcounts,filesize,gensize;
 
 		//Sub-block
 		strcpy(FASTQName, argv[3]);  //file name
-		//printf("FASTQName is %s",FASTQName);
 		strcpy(M1.Minput,FASTQName);
 		strcpy(prekeyname,"CG");
 		FILE *fastqr = NULL;
@@ -710,7 +709,7 @@ int main(int argc, char *argv[])
 		}
 
 		for (i = 0; i < BlockNum; i++){
-			char s[10];
+			char s[100];
 			sprintf(s, "%d", i);
 			strcat(OutFile[i], FASTQName);
 			strcat(M1.MOutFile[i], FASTQName);
@@ -917,7 +916,7 @@ void print_help()
 			"  -a, --assemble-based model, An optional amount (Default: 0.3 percent of the original file size) of reads, which contains the predefined prefix (Default: 'CG', could be combined to be an artificial reference. At the end of the package, this artificial reference is included.\n for example: LWFQZip2 -c -i input -a 0.003(Default: '-a 0.003').\n		LWFQZip2 -d -i input.lz -a.\n"
 			
 			"Mapping Options Options:\n"
-			"  -b, --the number of mapping thread(Default: 10, mininum:  6 )\n"
+			"  -b, --the number of mapping thread(Default: 100, mininum:  6 )\n"
 			"  -p, --specify the kmer prefixes, e.g.,'CG', 'AT', and 'TAG' (Default: '-p CG'). 'AA' is not recommended as a prefix.\n"
 			"  -k, --length of a kmer used in locate local alignment. (Default: '-k 8')\n"
 			"  -e, --the tolerance rate of mismatches.(Default: '-e 0.05')\n"

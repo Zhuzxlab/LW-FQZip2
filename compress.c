@@ -3,11 +3,11 @@
 
 FILE *fastq=NULL,*meta=NULL,*qs=NULL,*ref_g=NULL,*combine=NULL;
 FILE *pos=NULL,*cigar=NULL,*add=NULL,*cor=NULL,*sam=NULL;
-char meta_name[50]={'\0'},qs_name[50]={'\0'};
-char pos_name[50]={'\0'},cigar_name[50]={'\0'};
-char cor_name[50]={'\0'},add_name[50]={'\0'};
-char sam_name[50]={'\0'},combine_name[50]={'\0'};
-char map_name[50]={'\0'};
+char meta_name[500]={'\0'},qs_name[500]={'\0'};
+char pos_name[500]={'\0'},cigar_name[500]={'\0'};
+char cor_name[500]={'\0'},add_name[500]={'\0'};
+char sam_name[500]={'\0'},combine_name[500]={'\0'};
+char map_name[500]={'\0'};
 char *input_n, *ref_n;
 pthread_t t1, t2;
 
@@ -488,11 +488,11 @@ void  FQZip_compression(char *fastq_name, unsigned long long totalread,int Block
 {
 
 
-	char meta_lz[100]={'\0'},qs_lz[100]={'\0'};
-	char pos_lz[100]={'\0'},cigar_lz[100]={'\0'};
-	char cor_lz[100]={'\0'},add_lz[100]={'\0'};
-	char fasta_lz[100]={'\0'};
-	char order[1000]={'\0'};
+	char meta_lz[5000]={'\0'},qs_lz[5000]={'\0'};
+	char pos_lz[5000]={'\0'},cigar_lz[5000]={'\0'};
+	char cor_lz[5000]={'\0'},add_lz[5000]={'\0'};
+	char fasta_lz[5000]={'\0'};
+	char order[10000]={'\0'};
 	strcpy(meta_lz,meta_name);
 	m_strcat(meta_lz,".lz");
 	strcpy(qs_lz,qs_name);
@@ -505,15 +505,16 @@ void  FQZip_compression(char *fastq_name, unsigned long long totalread,int Block
 	m_strcat(cor_lz,".lz");
 	strcpy(add_lz,add_name);
 	m_strcat(add_lz,".lz");
-	if(assemble_flag==0)	//reference-based model
-	sprintf(order,"%s %s %s %s %s %s %s %s %s %s %s %s %s %lld %d %d","./FQZip c  ",pos_name,cigar_name,cor_name,meta_name,add_name,qs_name,pos_lz,cigar_lz,cor_lz,meta_lz,add_lz,qs_lz, totalread,BlockNum,highestCom_flag);
-	else		//assemble-based model
-	{sprintf(order,"%s %s %s %s %s %s %s %s %s %s %s %s %s %lld %d %s %d","./FQZip c  ",pos_name,cigar_name,cor_name,meta_name,add_name,qs_name,pos_lz,cigar_lz,cor_lz,meta_lz,add_lz,qs_lz, totalread,BlockNum,ref_name,highestCom_flag);
+	if(assemble_flag==0){	//reference-based model
+		
+		sprintf(order,"%s %s %s %s %s %s %s %s %s %s %s %s %s %lld %d %d","./FQZip c ",pos_name,cigar_name,cor_name,meta_name,add_name,qs_name,pos_lz,cigar_lz,cor_lz,meta_lz,add_lz,qs_lz, totalread,BlockNum,highestCom_flag);
+	}else		//assemble-based model
+	{sprintf(order,"%s %s %s %s %s %s %s %s %s %s %s %s %s %lld %d %s %d","./FQZip c ",pos_name,cigar_name,cor_name,meta_name,add_name,qs_name,pos_lz,cigar_lz,cor_lz,meta_lz,add_lz,qs_lz, totalread,BlockNum,ref_name,highestCom_flag);
 	strcpy(fasta_lz,ref_name);
 	m_strcat(fasta_lz,".lz");
 	}
 	if (-1 == (system(order)))printf("Please make sure you have installed the FQZip correctly");
-	char lwfqzip_name[50]={'\0'};
+	char lwfqzip_name[500]={'\0'};
 	char tar_name[500]={'\0'};
 	char tar1_name[500]={'\0'};
 	m_strcat(tar_name,meta_lz);
@@ -531,13 +532,13 @@ void  FQZip_compression(char *fastq_name, unsigned long long totalread,int Block
 	m_strcat(tar_name,add_lz);
 	m_strcat(tar_name," ");
 	char dir[500] = { '\0' };
-	char file_name[256]={'\0'};
+	char file_name[500]={'\0'};
 	char *p;
 	int i;
 	bool t = 0;
 	strcpy(dir, fastq_name);
 	//printf("fastq_name is %s\n",fastq_name);
-	for (i = 0; i < 256; i++)
+	for (i = 0; i < 500; i++)
 	{
 		if (dir[i] == '/')
 		{
@@ -550,9 +551,9 @@ void  FQZip_compression(char *fastq_name, unsigned long long totalread,int Block
 		char ndir[500] = {'\0'};
 		
 		p = rindex(dir, '/');p++;
-		for (i = 0; i < 100; i++)
+		for (i = 0; i < 500; i++)
 		{file_name[i]=*p;p++;}
-		char local_dir[256];
+		char local_dir[500];
 		m_strcat(tar1_name,file_name);
 		m_strcat(tar1_name,".meta.txt.lz ");
 		m_strcat(tar1_name,file_name);
@@ -572,13 +573,13 @@ void  FQZip_compression(char *fastq_name, unsigned long long totalread,int Block
 		}
 		getcwd(local_dir,sizeof(local_dir));
 		int local_dir_num;
-		for(int i=0;i<256;i++){
-			if(local_dir[i]=='/'){
+		for(int i=0;i<500;i++){
+			if(dir[i]=='/'){
 				local_dir_num = i;
 			}
 		}
 		for(int i=0;i<local_dir_num+1;i++){
-			ndir[i] = local_dir[i];
+			ndir[i] = dir[i];
 		}
 		chdir(ndir);
 		strcpy(lwfqzip_name,file_name);

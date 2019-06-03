@@ -18,7 +18,7 @@ unsigned long long totalbase=0, mappedbase=0;
 int CONSIDERLEN,cp;
 //pos.txt,cigar.txt,add.txt,cor.txt
 FILE *pos=NULL,*cigar=NULL,*add=NULL,*cor=NULL,*ref_g=NULL,*qs=NULL;
-char pos_name[50]={'\0'},cigar_name[50]={'\0'},cor_name[50]={'\0'},add_name[50]={'\0'},qs_name[50]={'\0'};
+char pos_name[500]={'\0'},cigar_name[500]={'\0'},cor_name[500]={'\0'},add_name[500]={'\0'},qs_name[500]={'\0'};
 char add_temp[READLEN]={'\0'},clip_seq[READLEN]={'\0'},base_temp[READLEN]={'\0'},match_temp[READLEN]={'\0'},base_[READLEN]={'\0'};
 int a=1;
 

@@ -4,19 +4,19 @@
 FILE *fastq_=NULL,*meta_=NULL,*qs_=NULL,*ref_g_=NULL;
 FILE *pos_=NULL,*cigar_=NULL,*add_=NULL,*cor_=NULL;
 FILE *base_=NULL,*meta_data=NULL,*qscore=NULL;
-char de_fastq_name[50]={'\0'},qscore_name[50]={'\0'};
-char meta_name_[50]={'\0'},qs_name_[50]={'\0'};
-char pos_name_[50]={'\0'},cigar_name_[50]={'\0'};
-char cor_name_[50]={'\0'},add_name_[50]={'\0'};
-char base_name_[50]={'\0'},metadata[50]={'\0'};
-char fastq_name[50] = { '\0' },fasta_nameC[50]={'\0'};
+char de_fastq_name[500]={'\0'},qscore_name[500]={'\0'};
+char meta_name_[500]={'\0'},qs_name_[500]={'\0'};
+char pos_name_[500]={'\0'},cigar_name_[500]={'\0'};
+char cor_name_[500]={'\0'},add_name_[500]={'\0'};
+char base_name_[500]={'\0'},metadata[500]={'\0'};
+char fastq_name[500] = { '\0' },fasta_nameC[500]={'\0'};
 char *ref_;
 pthread_t t1, t2, t3;
 
 char *get_fastq_name(char *fastqname,char *str)
 {
 	int i=0,j=0;
-	for(i=0;i<60;i++)
+	for(i=0;i<600;i++)
 	{
 		if(str[i]=='.'&&str[i+1]=='l'&&(str[i+2]=='w'||str[i+2]=='z'))
 			break;
@@ -64,9 +64,9 @@ void FQZip_decompression(char *fastq_name, char *compressedfile, int assemble_fl
 {
 
 
-	char meta_nameC[100]={'\0'},qs_nameC[100]={'\0'};
-	char pos_nameC[100]={'\0'},cigar_nameC[100]={'\0'};
-	char cor_nameC[100]={'\0'},add_nameC[100]={'\0'};
+	char meta_nameC[1000]={'\0'},qs_nameC[1000]={'\0'};
+	char pos_nameC[1000]={'\0'},cigar_nameC[1000]={'\0'};
+	char cor_nameC[1000]={'\0'},add_nameC[1000]={'\0'};
 	strcpy(meta_nameC,fastq_name);
 	m_strcat(meta_nameC,".meta.txt");
 	strcpy(qs_nameC,fastq_name);
@@ -81,12 +81,12 @@ void FQZip_decompression(char *fastq_name, char *compressedfile, int assemble_fl
 	m_strcat(add_nameC,".add.txt");
 	strcpy(fasta_nameC,fastq_name);
 	m_strcat(fasta_nameC,".fasta");
-	char meta_lz[100]={'\0'},qs_lz[100]={'\0'};
-	char pos_lz[100]={'\0'},cigar_lz[100]={'\0'};
-	char cor_lz[100]={'\0'},add_lz[100]={'\0'};
-	char fasta_lz[100]={'\0'};
-	char order[1000]={'\0'};
-	char dir[500] = { '\0' };
+	char meta_lz[1000]={'\0'},qs_lz[1000]={'\0'};
+	char pos_lz[1000]={'\0'},cigar_lz[1000]={'\0'};
+	char cor_lz[1000]={'\0'},add_lz[1000]={'\0'};
+	char fasta_lz[1000]={'\0'};
+	char order[10000]={'\0'};
+	char dir[5000] = { '\0' };
 	char *p;
 	int i;
 	bool t = 0;
@@ -101,7 +101,7 @@ void FQZip_decompression(char *fastq_name, char *compressedfile, int assemble_fl
 	if (t == 1)   //not LWFQZip dir
 	{
 		p = rindex(dir, '/');
-		for (i = 0; i < 30; i++)
+		for (i = 0; i < 300; i++)
 			*p = '\0'; p++;
 	}
 	strcpy(meta_lz,fastq_name);
